@@ -1,14 +1,25 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { Navigate, useLocation, useParams } from "react-router-dom";
+import Course from "../components/Course";
+import PageNotFound from "../components/PageNotFound";
+import useQuery from "../hooks/useQuery";
+import courseService from "../services/courseService";
 
 export default function CourseDetail() {
-  const { slug } = useParams();
+  const { id } = useParams();
+  const location = useLocation();
+  const { data, loading } = useQuery(() => courseService.getDetail(id), []);
+  const { data: courses } = useQuery(() => courseService.getList(), []);
+
+  if (loading) return <p>Đang tải dữ liệu</p>;
+
+  if (!data) return <PageNotFound />;
   return (
     <main className="course-detail" id="main">
       <section className="banner style2">
         <div className="container">
           <div className="info">
-            <h1>Thực Chiến front-end căn bản</h1>
+            <h1>{data.title}</h1>
             <div className="row">
               <div className="date">
                 <strong>Khai giảng:</strong> 12/10/2020
@@ -24,7 +35,7 @@ export default function CourseDetail() {
           <div className="container">
             <div className="video">
               <div className="icon">
-                <img src="img/play-icon-white.png" alt="" />
+                <img src="/img/play-icon-white.png" alt="" />
               </div>{" "}
               <span>giới thiệu</span>
             </div>
@@ -41,7 +52,7 @@ export default function CourseDetail() {
           </p>
           <h2 className="title">giới thiệu về khóa học</h2>
           <div className="cover">
-            <img src="img/course-detail-img.png" alt="" />
+            <img src="/img/course-detail-img.png" alt="" />
           </div>
           <h3 className="title">nội dung khóa học</h3>
           <div className="accordion">
@@ -149,10 +160,10 @@ export default function CourseDetail() {
           <div className="teaches">
             <div className="teacher">
               <div className="avatar">
-                <img src="img/avatar-lg.png" alt="" />
+                <img src="/img/avatar-lg.png" alt="" />
               </div>
               <div className="info">
-                <div className="name">TRẦN NGHĨA</div>
+                <div className="name">Linh Duy</div>
                 <div className="title">
                   Founder CFD &amp; Creative Front-End Developer
                 </div>
@@ -174,11 +185,11 @@ export default function CourseDetail() {
           </div>
           <div className="bottom">
             <div className="user">
-              <img src="img/user-group-icon.png" alt="" /> 12 bạn đã đăng ký
+              <img src="/img/user-group-icon.png" alt="" /> 12 bạn đã đăng ký
             </div>
             <div className="btn main btn-register round">đăng ký</div>
             <div className="btn-share btn overlay round btn-icon">
-              <img src="img/facebook.svg" alt="" />
+              <img src="/img/facebook.svg" alt="" />
             </div>
           </div>
         </div>
@@ -193,7 +204,7 @@ export default function CourseDetail() {
             <div className="col-md-4 course">
               <div className="wrap">
                 <a href="#" className="cover">
-                  <img src="img/img.png" alt="" />
+                  <img src="/img/img.png" alt="" />
                 </a>
                 <div className="info">
                   <a className="name" href="#">
@@ -206,7 +217,7 @@ export default function CourseDetail() {
                 <div className="bottom">
                   <div className="teacher">
                     <div className="avatar">
-                      <img src="img/avt.png" alt="" />
+                      <img src="/img/avt.png" alt="" />
                     </div>
                     <div className="name">Vương Đặng</div>
                   </div>
@@ -217,7 +228,7 @@ export default function CourseDetail() {
             <div className="col-md-4 course">
               <div className="wrap">
                 <a href="#" className="cover">
-                  <img src="img/img2.png" alt="" />
+                  <img src="/img/img2.png" alt="" />
                 </a>
                 <div className="info">
                   <a className="name" href="#">
@@ -230,7 +241,7 @@ export default function CourseDetail() {
                 <div className="bottom">
                   <div className="teacher">
                     <div className="avatar">
-                      <img src="img/avt.png" alt="" />
+                      <img src="/img/avt.png" alt="" />
                     </div>
                     <div className="name">Trần Nghĩa</div>
                   </div>
@@ -241,7 +252,7 @@ export default function CourseDetail() {
             <div className="col-md-4 course">
               <div className="wrap">
                 <a href="#" className="cover">
-                  <img src="img/img3.png" alt="" />
+                  <img src="/img/img3.png" alt="" />
                 </a>
                 <div className="info">
                   <a className="name" href="#">
@@ -254,7 +265,7 @@ export default function CourseDetail() {
                 <div className="bottom">
                   <div className="teacher">
                     <div className="avatar">
-                      <img src="img/avt.png" alt="" />
+                      <img src="/img/avt.png" alt="" />
                     </div>
                     <div className="name">Trần Nghĩa</div>
                   </div>
@@ -272,78 +283,10 @@ export default function CourseDetail() {
             <h2 className="main-title">Liên quan</h2>
           </div>
           <div className="list row">
-            <div className="col-md-4 course">
-              <div className="wrap">
-                <a href="#" className="cover">
-                  <img src="img/img.png" alt="" />
-                </a>
-                <div className="info">
-                  <a className="name" href="#">
-                    Front-end căn bản
-                  </a>
-                  <p className="des">
-                    One of the best corporate fashion brands in Sydney
-                  </p>
-                </div>
-                <div className="bottom">
-                  <div className="teacher">
-                    <div className="avatar">
-                      <img src="img/avt.png" alt="" />
-                    </div>
-                    <div className="name">Vương Đặng</div>
-                  </div>
-                  <div className="register-btn">Đăng Ký</div>
-                </div>
-              </div>
-            </div>
-            <div className="col-md-4 course">
-              <div className="wrap">
-                <a href="#" className="cover">
-                  <img src="img/img2.png" alt="" />
-                </a>
-                <div className="info">
-                  <a className="name" href="#">
-                    Front-end nâng cao
-                  </a>
-                  <p className="des">
-                    One of the best corporate fashion brands in Sydney
-                  </p>
-                </div>
-                <div className="bottom">
-                  <div className="teacher">
-                    <div className="avatar">
-                      <img src="img/avt.png" alt="" />
-                    </div>
-                    <div className="name">Trần Nghĩa</div>
-                  </div>
-                  <div className="register-btn">Đăng Ký</div>
-                </div>
-              </div>
-            </div>
-            <div className="col-md-4 course">
-              <div className="wrap">
-                <a href="#" className="cover">
-                  <img src="img/img3.png" alt="" />
-                </a>
-                <div className="info">
-                  <a className="name" href="#">
-                    Laravel framework
-                  </a>
-                  <p className="des">
-                    One of the best corporate fashion brands in Sydney
-                  </p>
-                </div>
-                <div className="bottom">
-                  <div className="teacher">
-                    <div className="avatar">
-                      <img src="img/avt.png" alt="" />
-                    </div>
-                    <div className="name">Trần Nghĩa</div>
-                  </div>
-                  <div className="register-btn">Đăng Ký</div>
-                </div>
-              </div>
-            </div>
+            {courses &&
+              courses.map((e) => {
+                <Course key={e.id} {...e} />;
+              })}
           </div>
         </div>
       </section>

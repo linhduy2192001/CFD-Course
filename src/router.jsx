@@ -17,6 +17,7 @@ import {
   PROFILE_PAYMENT_PATH,
   COURSE_DETAIL,
 } from "./config/path";
+import Page404 from "./pages/not-found";
 
 const router = [
   {
@@ -63,6 +64,10 @@ const router = [
             element: <Payment />,
           },
         ],
+      },
+      {
+        path: "/not-found",
+        element: <Page404 />,
       },
     ],
   },
