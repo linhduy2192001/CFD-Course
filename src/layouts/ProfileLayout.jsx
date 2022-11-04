@@ -24,7 +24,9 @@ export default function ProfileLayout() {
         <div className="container">
           <div className="tab">
             <div className="tab-title">
-              <NavLink to={PROFILE_PATH}>Thông tin tài khoản</NavLink>
+              <NavLink end to={PROFILE_PATH}>
+                Thông tin tài khoản
+              </NavLink>
               <NavLink to={PROFILE_COURSE_PATH}>Khóa học của bạn</NavLink>
               <NavLink to={PROFILE_PROJECT_PATH}>Dự án đã làm</NavLink>
               <NavLink to={PROFILE_PAYMENT_PATH}>Lịch sử thanh toán</NavLink>
