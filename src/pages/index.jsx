@@ -19,7 +19,7 @@ export default function Home() {
     error: errorCourses,
   } = useQuery(() => {
     return courseService.getList();
-  });
+  }, []);
   return (
     <main className="homepage" id="main">
       <div className="banner jarallax">
