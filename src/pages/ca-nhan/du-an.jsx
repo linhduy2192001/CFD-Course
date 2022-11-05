@@ -38,7 +38,7 @@ export default function Project() {
                 GboxMB
               </a>
               <p className="des">
-                Dự án hoàn thành trong khóa CFD6 Offline của CFD Team.
+                Dự án hoàn thành trong khóa CFD6o0 Offline của CFD Team.
               </p>
             </div>
             <div className="bottom">

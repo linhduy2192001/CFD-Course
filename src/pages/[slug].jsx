@@ -4,14 +4,22 @@ import Course from "../components/Course";
 import PageNotFound from "../components/PageNotFound";
 import useQuery from "../hooks/useQuery";
 import courseService from "../services/courseService";
+import { LoadingOutlined } from "@ant-design/icons";
+import usePageChangeOnTop from "../hooks/usePageChangeOnTop";
 
 export default function CourseDetail() {
-  const { id } = useParams();
+  const { slug, id } = useParams();
   const location = useLocation();
-  const { data, loading } = useQuery(() => courseService.getDetail(id), []);
+  const { data, loading } = useQuery(() => courseService.getDetail(id), [id]);
   const { data: courses } = useQuery(() => courseService.getList(), []);
-
-  if (loading) return <p>Đang tải dữ liệu</p>;
+  usePageChangeOnTop([id]);
+  if (loading)
+    return (
+      <p>
+        {" "}
+        Đang tải dữ liệu <LoadingOutlined />{" "}
+      </p>
+    );
 
   if (!data) return <PageNotFound />;
   return (
@@ -284,8 +292,8 @@ export default function CourseDetail() {
           </div>
           <div className="list row">
             {courses &&
-              courses.map((e) => {
-                <Course key={e.id} {...e} />;
+              courses.slice(0, 3).map((e) => {
+                return <Course key={e.id} {...e} />;
               })}
           </div>
         </div>

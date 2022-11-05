@@ -1,19 +1,25 @@
 import React, { useEffect, useState } from "react";
 import Course from "../components/Course";
-import axios from "axios";
-import api from "../config/api";
-import courseService from "../services/courseService";
 import useQuery from "../hooks/useQuery";
+import courseService from "../services/courseService";
+import { LoadingOutlined } from "@ant-design/icons";
 
 export default function Home() {
+  //   useEffect(() => {
+  //     fetch(`http://cfd-reactjs.herokuapp.com/elearning/v4/courses
+  // `)
+  //       .then((res) => res.json())
+  //       .then((res) => {
+  //         setCourses(res.data);
+  //       });
+  //   }, []);
   const {
     data: courses,
     loading: loadingCourses,
-    error: errorCourse,
+    error: errorCourses,
   } = useQuery(() => {
     return courseService.getList();
   });
-
   return (
     <main className="homepage" id="main">
       <div className="banner jarallax">
@@ -43,10 +49,12 @@ export default function Home() {
           </div>
           <div className="list row">
             {loadingCourses ? (
-              <p>Đang tải dữ liệu</p>
+              <p>
+                Đang tải dữ liệu <LoadingOutlined />
+              </p>
             ) : (
               courses.map((e) => {
-                <Course key={e.id} {...e} />;
+                return <Course key={e.id} {...e} />;
               })
             )}
           </div>
