@@ -1,5 +1,6 @@
 import React from "react";
-import { NavLink, Outlet } from "react-router-dom";
+import { useContext } from "react";
+import { Navigate, NavLink, Outlet } from "react-router-dom";
 import {
   PROFILE_COIN_PATH,
   PROFILE_COURSE_PATH,
@@ -9,12 +10,14 @@ import {
 } from "../config/path";
 
 export default function ProfileLayout() {
+  const { user } = useContext();
+
+  if (!user) return <Navigate to="/" />;
   return (
     <main className="profile" id="main">
       <section>
         <div className="top-info">
           <div className="avatar">
-            {/* <span class="text">H</span> */}
             <img src="/img/avatar-lg.png" alt="" />
             <div className="camera" />
           </div>

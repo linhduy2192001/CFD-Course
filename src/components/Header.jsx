@@ -1,8 +1,12 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../App";
+import { HOME_PATH } from "../config/path";
 
 export default function Header() {
-  const [login, setLogin] = useState(true);
+  const { user } = useContext(AuthContext);
+
   const navigate = useNavigate();
 
   const onLogout = (ev) => {
@@ -20,18 +24,18 @@ export default function Header() {
           </div>
           <span className="text">menu</span>
         </div>
-        <a href="#" className="logo">
+        <Link to={HOME_PATH} className="logo">
           <img src="/img/logo.svg" alt="" />
           <h1>CFD</h1>
-        </a>
+        </Link>
         <div className="right">
-          {login ? (
+          {user ? (
             <div className="have-login">
               <div className="account">
                 <a href="#" className="info">
-                  <div className="name">Phan Ngọc Linh Duy</div>
+                  <div className="name">{user.name}</div>
                   <div className="avatar">
-                    <img src="/img/avt.png" alt="" />
+                    <img src={user.avatar} alt="" />
                   </div>
                 </a>
               </div>

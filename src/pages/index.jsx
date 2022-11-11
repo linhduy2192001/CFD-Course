@@ -136,7 +136,7 @@ export default function Home() {
                   <div className="ct ct-1 active">
                     <div className="info">
                       <div className="name">
-                        <h4>Tiến Tài</h4>
+                        <h4>Phan Ngọc Linh Duy</h4>
                         <p>Thành viên CFD1</p>
                       </div>
                       <div className="quotes">
@@ -144,8 +144,10 @@ export default function Home() {
                       </div>
                     </div>
                     <div className="content">
-                      Mentor có tâm, tận tình. Mình tìm được hướng đi trong lập
-                      trình front-end qua khóa học. Like cho 4 mentor.
+                      Lorem ipsum dolor si amet, consectetur adipiscing elit.
+                      Sed sollicitudin libero id magna finibus, in maximus urna
+                      tincidunt. Nam at leo lacinia, interdum dolor in, molestie
+                      lectus. Aenean porttitor purus at purus euismod tristique
                     </div>
                     <div className="bottom">
                       <a href="#" target="_blank">
@@ -157,7 +159,7 @@ export default function Home() {
                   <div className="ct ct-2">
                     <div className="info">
                       <div className="name">
-                        <h4>Phạm Thành Trung</h4>
+                        <h4>Đỗ Quang Huy</h4>
                         <p>Thành viên CFD1</p>
                       </div>
                       <div className="quotes">
@@ -180,7 +182,7 @@ export default function Home() {
                   <div className="ct ct-3">
                     <div className="info">
                       <div className="name">
-                        <h4>Nguyễn Văn Tuấn</h4>
+                        <h4>Trần Chiêu Thanh</h4>
                         <p>Thành viên CFD1</p>
                       </div>
                       <div className="quotes">
@@ -216,7 +218,7 @@ export default function Home() {
                       <div className="ct_m">
                         <div className="info">
                           <div className="name">
-                            <h4>Tiến Tài</h4>
+                            <h4>Phan Ngọc Linh Duy</h4>
                             <p>Thành viên CFD1</p>
                           </div>
                           <div className="quotes">
@@ -248,7 +250,7 @@ export default function Home() {
                       <div className="ct_m">
                         <div className="info">
                           <div className="name">
-                            <h4>Nguyễn Văn Tuấn</h4>
+                            <h4>Trần Chiêu Thanh</h4>
                             <p>Thành viên CFD1</p>
                           </div>
                           <div className="quotes">
@@ -276,11 +278,12 @@ export default function Home() {
                           />
                           <img data-flickity-lazyload="img/tes.jpg" alt="" />
                         </picture>
+                        <samp></samp>
                       </div>
                       <div className="ct_m">
                         <div className="info">
                           <div className="name">
-                            <h4>Phạm Thành Trung</h4>
+                            <h4>Đỗ Quang Huy</h4>
                             <p>Thành viên CFD1</p>
                           </div>
                           <div className="quotes">
