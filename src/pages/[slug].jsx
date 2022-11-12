@@ -19,6 +19,8 @@ export default function CourseDetail() {
     [id]
   );
   const { data: courses } = useQuery(() => courseService.getList(), []);
+  // usePageChangeOnTop([]);
+
   if (loading)
     return (
       <p>
@@ -28,7 +30,6 @@ export default function CourseDetail() {
     );
 
   if (!course) return <PageLoading />;
-  // usePageChangeOnTop([id]);
 
   return (
     <main className="course-detail" id="main">

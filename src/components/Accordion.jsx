@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import React, { useState } from "react";
+import React, { createContext, useContext, useState } from "react";
 import styled from "styled-components";
 
 const ContentWrap = styled.div`
@@ -8,6 +8,7 @@ const ContentWrap = styled.div`
 
 export default function Accordion({ date, title, children, isOpen, onClick }) {
   //   const [isOpen, setIsOpen] = useState(false);
+  const { activeContent, onActive } = useContext(Context);
   return (
     <div className={classNames("accordion", { active: isOpen })}>
       <div className="accordion__title" onClick={onClick}>
@@ -18,3 +19,16 @@ export default function Accordion({ date, title, children, isOpen, onClick }) {
     </div>
   );
 }
+
+const Context = createContext({});
+Accordion.Group = ({ children }) => {
+  const [activeContent, setActiveContent] = useState();
+  const onActive = (i) => {
+    setActiveContent(i === activeContent ? undefined : i);
+  };
+  return (
+    <Context.Provider value={{ activeContent, onActive }}>
+      {children}
+    </Context.Provider>
+  );
+};
