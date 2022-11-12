@@ -32,7 +32,7 @@ const router = [
         element: <Contact />,
       },
       {
-        path: "/thanh-vien",
+        path: "/than-vien",
         element: <Team />,
       },
       {

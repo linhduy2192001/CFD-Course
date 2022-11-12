@@ -1,18 +1,12 @@
 import React, { useState } from "react";
 import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { AuthContext } from "../App";
-import { HOME_PATH } from "../config/path";
+import { useAuth } from "../hooks/useAuth";
+import { HOME_PATH, PROFILE_PATH } from "../config/path";
 
 export default function Header() {
-  const { user } = useContext(AuthContext);
+  const { user, onLogin, onLogout } = useAuth();
 
-  const navigate = useNavigate();
-
-  const onLogout = (ev) => {
-    ev.preventDefault();
-    navigate("/");
-  };
   return (
     <header id="header">
       <div className="wrap">
@@ -42,15 +36,15 @@ export default function Header() {
               <div className="hamberger"></div>
               <div className="sub">
                 <a href="#">Khóa học của tôi</a>
-                <a href="#">Thông tin tài khoản</a>
-                <a href="#" onClick={onLogout}>
+                <Link to={PROFILE_PATH}> Thông tin tài khoản</Link>
+                <a href="javascript:void()" onClick={onLogout}>
                   Đăng xuất
                 </a>
               </div>
             </div>
           ) : (
-            <div className="not-login bg-none">
-              <a href="#" className="btn-register">
+            <div className="not-login bg-none" onClick={onLogin}>
+              <a href="javascript:void()" className="btn-register">
                 Đăng nhập
               </a>
               <a href="login.html" className="btn main btn-open-login">

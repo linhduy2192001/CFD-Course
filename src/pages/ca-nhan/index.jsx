@@ -4,12 +4,11 @@ import Project from "./du-an";
 import MyCourse from "./khoa-hoc";
 import Payment from "./lich-su-thanh-toan";
 import { Navigate, useNavigate } from "react-router-dom";
+import { useContext } from "react";
 
 export default function Profile() {
-  const [login, setLogin] = useState(true);
   return (
     <div className="tab1">
-      {!login && <Navigate to="/" />}
       <label>
         <p>
           Họ và tên<span>*</span>

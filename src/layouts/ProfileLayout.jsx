@@ -1,6 +1,7 @@
 import React from "react";
 import { useContext } from "react";
 import { Navigate, NavLink, Outlet } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
 import {
   PROFILE_COIN_PATH,
   PROFILE_COURSE_PATH,
@@ -10,8 +11,7 @@ import {
 } from "../config/path";
 
 export default function ProfileLayout() {
-  const { user } = useContext();
-
+  const { user } = useAuth();
   if (!user) return <Navigate to="/" />;
   return (
     <main className="profile" id="main">
