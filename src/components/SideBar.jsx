@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { HOME_PATH, TEAM_PATH } from "../config/path";
+import { COURSE_DETAIL, HOME_PATH, TEAM_PATH } from "../config/path";
 
 export default function SideBar() {
   return (
@@ -16,7 +16,7 @@ export default function SideBar() {
           <Link to={TEAM_PATH}>CFD Team</Link>
         </li>
         <li>
-          <a href="#">Khóa Học</a>
+          <Link to={COURSE_DETAIL}>Khóa Học</Link>
         </li>
         <li>
           <a href="#">Dự Án</a>
