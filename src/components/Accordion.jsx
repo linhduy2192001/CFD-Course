@@ -10,7 +10,9 @@ export default function Accordion({ date, title, children, isOpen, onClick }) {
   //   const [isOpen, setIsOpen] = useState(false);
   const { activeContent, onActive } = useContext(Context);
   return (
-    <div className={classNames("accordion", { active: isOpen })}>
+    <div
+      className={classNames("accordion", { active: isOpen || activeContent })}
+    >
       <div className="accordion__title" onClick={onClick}>
         <div className="date">{date}</div>
         <h3>{title}</h3>
