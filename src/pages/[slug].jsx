@@ -72,21 +72,24 @@ export default function CourseDetail() {
             <img src="/img/course-detail-img.png" alt="" />
           </div>
           <h3 className="title">nội dung khóa học</h3>
-          {course?.content?.map((e, i) => {
-            return (
-              <Accordion
-                isOpen={i === activeContent}
-                onClick={() =>
-                  setActiveContent(i === activeContent ? undefined : i)
-                }
-                date={i + 1}
-                key={i}
-                title={e.title}
-              >
-                {e.content}
-              </Accordion>
-            );
-          })}
+          <Accordion.Group>
+            {course?.content?.map((e, i) => {
+              return (
+                <Accordion
+                  isOpen={i === activeContent}
+                  onClick={() =>
+                    setActiveContent(i === activeContent ? undefined : i)
+                  }
+                  date={i + 1}
+                  key={i}
+                  title={e.title}
+                >
+                  {e.content}
+                </Accordion>
+              );
+            })}
+          </Accordion.Group>
+
           <h3 className="title">yêu cầu cần có</h3>
           <div className="row row-check">
             <div className="col-md-6">Đã từng học qua HTML, CSS</div>
