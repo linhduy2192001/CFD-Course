@@ -45,7 +45,6 @@ Accordion.Group = ({ children }) => {
     setActiveContent(i === activeContent ? -1 : i);
   };
   const register = () => {};
-  console.log("children :>> ", children);
   return (
     <Context.Provider value={{ activeContent, onActive }}>
       {React.Children.map(children, (child, i) => {

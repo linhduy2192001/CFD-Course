@@ -1,12 +1,26 @@
 import React, { useState } from "react";
 import { useContext } from "react";
+// import { useAuth } from "../hooks/useAuth";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../hooks/useAuth";
 import { HOME_PATH, PROFILE_PATH } from "../config/path";
+import { usePage } from "../hooks/usePage";
 
 export default function Header() {
-  const { user, onLogin, onLogout } = useAuth();
+  // const { user, onLogin, onLogout } = useAuth();
 
+  const [login, setLogin] = useState(false);
+  const navigate = useNavigate();
+  const { setIsOpenLoginModal } = usePage();
+  const onLogout = (ev) => {
+    ev.preventDefault();
+    navigate("/");
+    //     setUser();
+  };
+
+  const onLogin = (ev) => {
+    ev.preventDefault();
+    setIsOpenLoginModal(true);
+  };
   return (
     <header id="header">
       <div className="wrap">
@@ -23,13 +37,13 @@ export default function Header() {
           <h1>CFD</h1>
         </Link>
         <div className="right">
-          {user ? (
+          {login ? (
             <div className="have-login">
               <div className="account">
                 <a href="#" className="info">
-                  <div className="name">{user.name}</div>
+                  <div className="name">sadasdasda</div>
                   <div className="avatar">
-                    <img src={user.avatar} alt="" />
+                    <img src="" alt="" />
                   </div>
                 </a>
               </div>

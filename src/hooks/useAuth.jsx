@@ -6,10 +6,7 @@ const AuthenticationContext = createContext({});
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState();
   const onLogin = () => {
-    setUser({
-      name: "Phan Ngọc Linh Duy",
-      avatar: "https://cfdcircle.vn/files/teachers/trannghia.jpg",
-    });
+    setUser({});
   };
   const onLogout = (ev) => {
     ev.preventDefault();

@@ -4,8 +4,11 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 
 import "./config/api";
+import { PageProvider } from "./hooks/usePage";
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
-    <App />
+    <PageProvider>
+      <App />
+    </PageProvider>
   </BrowserRouter>
 );
