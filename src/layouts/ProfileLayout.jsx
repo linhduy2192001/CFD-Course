@@ -9,19 +9,20 @@ import {
   PROFILE_PAYMENT_PATH,
   PROFILE_PROJECT_PATH,
 } from "../config/path";
+import { usePage } from "../hooks/usePage";
 
 export default function ProfileLayout() {
-  const { user } = useAuth();
+  const { user } = usePage();
   if (!user) return <Navigate to="/" />;
   return (
     <main className="profile" id="main">
       <section>
         <div className="top-info">
           <div className="avatar">
-            <img src="/img/avatar-lg.png" alt="" />
+            <img src={user.avatar} alt="" />
             <div className="camera" />
           </div>
-          <div className="name">Duy Phan</div>
+          <div className="name">{user.name}</div>
           <p className="des">Thành viên của team CFD6-OFFLINE</p>
         </div>
         <div className="container">

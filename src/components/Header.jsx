@@ -7,14 +7,14 @@ import { usePage } from "../hooks/usePage";
 
 export default function Header() {
   // const { user, onLogin, onLogout } = useAuth();
-
-  const [login, setLogin] = useState(false);
   const navigate = useNavigate();
-  const { setIsOpenLoginModal } = usePage();
+  const { setIsOpenLoginModal, user, setUser } = usePage();
   const onLogout = (ev) => {
     ev.preventDefault();
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    setUser(undefined);
     navigate("/");
-    //     setUser();
   };
 
   const onLogin = (ev) => {
@@ -37,19 +37,19 @@ export default function Header() {
           <h1>CFD</h1>
         </Link>
         <div className="right">
-          {login ? (
+          {user ? (
             <div className="have-login">
               <div className="account">
                 <a href="#" className="info">
-                  <div className="name">sadasdasda</div>
+                  <div className="name">{user.name}</div>
                   <div className="avatar">
-                    <img src="" alt="" />
+                    <img src={user.avatar} alt="" />
                   </div>
                 </a>
               </div>
               <div className="hamberger"></div>
               <div className="sub">
-                <a href="#">Khóa học của tôi</a>
+                <Link to="#">Khóa học của tôi</Link>
                 <Link to={PROFILE_PATH}> Thông tin tài khoản</Link>
                 <a href="javascript:void()" onClick={onLogout}>
                   Đăng xuất

@@ -1,6 +1,22 @@
-import React from "react";
+import React, { useRef, useState } from "react";
+import { useEffect } from "react";
+import Count from "../components/Count";
+import Input from "../components/Input";
 
 export default function Contact() {
+  const [isRunning, setIsRunning] = useState(true);
+  const countRef = useRef();
+  const inputRef = useRef();
+
+  useEffect(() => {
+    console.log("ref :>> ", inputRef);
+  }, []);
+  /**
+   * Ref 1: Thao tac voi DOM element
+   * Ref 2: forwardRef
+   * Ref 3: vừa forwardRef -> trả ra 1 thể hiện khác của ref, sử dụng useImperativeHandle
+   */
+
   return (
     <main className="register-course" id="main">
       <section className="section-1 wrap container">
@@ -12,32 +28,17 @@ export default function Contact() {
           dụng và công ty trong và ngoài nước.
         </p>
         <div className="form">
-          <label>
-            <p>
-              Họ và tên<span>*</span>
-            </p>
-            <input type="text" placeholder="Họ và tên bạn" />
-          </label>
-          <label>
-            <p>Số điện thoại</p>
-            <input type="text" placeholder="Số điện thoại" />
-          </label>
-          <label>
-            <p>
-              Email<span>*</span>
-            </p>
-            <input type="text" placeholder="Email của bạn" />
-          </label>
-          <label>
-            <p>Website</p>
-            <input type="text" placeholder="Đường dẫn website http://" />
-          </label>
-          <label>
-            <p>
-              Tiêu đề<span>*</span>
-            </p>
-            <input type="text" placeholder="Tiêu đề liên hệ" />
-          </label>
+          <Input
+            ref={inputRef}
+            label="Họ và tên"
+            required
+            placeholder="Họ và tên"
+          />
+          <Input label="Số điện thoại" required placeholder="Số điện thoại" />
+          <Input label="Email" required placeholder="Email" />
+          <Input label="Website" placeholder="Đường dẫn website http://" />
+          <Input label="Tiêu đề" required placeholder="Tiêu đề liên hệ/" />
+          <Input label=" Nội dung" required placeholder="Tiêu đề liên hệ/" />
           <label>
             <p>
               Nội dung<span>*</span>
@@ -46,6 +47,21 @@ export default function Contact() {
           </label>
           <div className="btn main rect">đăng ký</div>
         </div>
+        <button
+          onClick={() => {
+            countRef.current.stop();
+          }}
+        >
+          Stop
+        </button>
+        <button
+          onClick={() => {
+            countRef.current.resume();
+          }}
+        >
+          Resume
+        </button>
+        <Count ref={countRef} />
       </section>
       {/* <div class="register-success">
             <div class="contain">

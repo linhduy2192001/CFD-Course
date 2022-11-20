@@ -62,11 +62,7 @@ export default function CourseDetail() {
       </section>
       <section className="section-2">
         <div className="container">
-          <p className="des">
-            Many Laravel apps don’t warrant the complexity of a full front-end
-            framework like Vue or React. In this series, we’ll walk through a
-            handful of simple ways to add dynamic functionality to your apps.
-          </p>
+          <p className="des">{course.long_description}</p>
           <h2 className="title">giới thiệu về khóa học</h2>
           <div className="cover">
             <img src="/img/course-detail-img.png" alt="" />
@@ -129,22 +125,14 @@ export default function CourseDetail() {
           <div className="teaches">
             <div className="teacher">
               <div className="avatar">
-                <img src="/img/avatar-lg.png" alt="" />
+                <img src={course.teacher.avatar} alt="" />
               </div>
               <div className="info">
-                <div className="name">Linh Duy</div>
+                <div className="name">{course.teacher.title}</div>
                 <div className="title">
                   Founder CFD &amp; Creative Front-End Developer
                 </div>
-                <p className="intro">
-                  My education, career, and even personal life have been molded
-                  by one simple principle; well designed information resonates
-                  with people and can change lives.I have a passion for making
-                  information resonate. It all starts with how people think.
-                  With how humans work. As humans we have learned how to read
-                  and write and while that is incredible, we are also already
-                  hard-wired to do some things a bit more "automatically"
-                </p>
+                <p className="intro">{course.teacher.description}</p>
                 <p>
                   <strong>Website:</strong>{" "}
                   <a href="#">http://nghiatran.info</a>

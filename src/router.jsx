@@ -66,7 +66,7 @@ const router = [
         ],
       },
       {
-        path: "/not-found",
+        path: "*",
         element: <Page404 />,
       },
     ],
