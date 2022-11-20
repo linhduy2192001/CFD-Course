@@ -7,8 +7,10 @@ import courseService from "../services/courseService";
 import { LoadingOutlined } from "@ant-design/icons";
 import usePageChangeOnTop from "../hooks/usePageChangeOnTop";
 import Accordion from "../components/Accordion";
+import Required from "../components/Required";
 import PageLoading from "../components/PageLoading";
 import { useState } from "react";
+import Mentor from "../components/Mentor";
 
 export default function CourseDetail() {
   const [activeContent, setActiveContent] = useState();
@@ -56,7 +58,7 @@ export default function CourseDetail() {
               </div>{" "}
               <span>giới thiệu</span>
             </div>
-            <div className="money">4.000.000 VND</div>
+            <div className="money">{course.money} VND</div>
           </div>
         </div>
       </section>
@@ -64,6 +66,7 @@ export default function CourseDetail() {
         <div className="container">
           <p className="des">{course.long_description}</p>
           <h2 className="title">giới thiệu về khóa học</h2>
+          <p className="des">{course.short_description}</p>
           <div className="cover">
             <img src="/img/course-detail-img.png" alt="" />
           </div>
@@ -88,10 +91,9 @@ export default function CourseDetail() {
 
           <h3 className="title">yêu cầu cần có</h3>
           <div className="row row-check">
-            <div className="col-md-6">Đã từng học qua HTML, CSS</div>
-            <div className="col-md-6">
-              Cài đặt phần mềm Photoshop, Adobe illustrator, Skype
-            </div>
+            {course.required.map((e, i) => {
+              return <Required key={i} content={e.content} />;
+            })}
           </div>
           <h3 className="title">hình thức học</h3>
           <div className="row row-check">
@@ -129,9 +131,7 @@ export default function CourseDetail() {
               </div>
               <div className="info">
                 <div className="name">{course.teacher.title}</div>
-                <div className="title">
-                  Founder CFD &amp; Creative Front-End Developer
-                </div>
+                <div className="title">{course.mentor.positon}</div>
                 <p className="intro">{course.teacher.description}</p>
                 <p>
                   <strong>Website:</strong>{" "}
@@ -140,6 +140,12 @@ export default function CourseDetail() {
               </div>
             </div>
           </div>
+          <h3 className="title">Mentor</h3>
+          {course.mentor &&
+            course.mentor.map((e) => {
+              return <Mentor key={e.id} {...e} />;
+            })}
+
           <div className="bottom">
             <div className="user">
               <img src="/img/user-group-icon.png" alt="" /> 12 bạn đã đăng ký

@@ -20,6 +20,8 @@ export default function Home() {
   } = useQuery(() => {
     return courseService.getList();
   }, []);
+  console.log("home-rerender");
+
   return (
     <main className="homepage" id="main">
       <div className="banner jarallax">

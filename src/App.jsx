@@ -2,6 +2,7 @@ import { useState } from "react";
 import { createContext } from "react";
 import { Route, Router, Routes, useRoutes } from "react-router-dom";
 import { AuthProvider } from "./hooks/useAuth";
+import store from "./store";
 
 import router from "./router";
 

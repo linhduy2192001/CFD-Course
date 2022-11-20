@@ -1,19 +1,27 @@
 import React, { useState } from "react";
 import { useContext } from "react";
-// import { useAuth } from "../hooks/useAuth";
+import { useSelector, useDispatch } from "react-redux";
+// import { useAuth } from "../hooks/useAuth";x
 import { Link, useNavigate } from "react-router-dom";
 import { HOME_PATH, PROFILE_PATH } from "../config/path";
+import { createStore } from "redux";
 import { usePage } from "../hooks/usePage";
+import { AUTH_LOGIN } from "../store/type";
+import { loginAction, logoutAction } from "../store/authReducer";
 
 export default function Header() {
   // const { user, onLogin, onLogout } = useAuth();
   const navigate = useNavigate();
-  const { setIsOpenLoginModal, user, setUser } = usePage();
+  const { setIsOpenLoginModal } = usePage();
+
+  const { user } = useSelector((store) => store.auth);
+
+  const dispatch = useDispatch();
   const onLogout = (ev) => {
     ev.preventDefault();
     localStorage.removeItem("user");
     localStorage.removeItem("token");
-    setUser(undefined);
+    dispatch(logoutAction());
     navigate("/");
   };
 

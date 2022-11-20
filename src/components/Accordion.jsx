@@ -14,7 +14,6 @@ export default function Accordion({
   onClick,
   index,
 }) {
-  console.log("index :>> ", index);
   const [_isOpen, setIsOpen] = useState(false);
   const { activeContent, onActive } = useContext(Context);
   const active = isOpen || activeContent === index || _isOpen;

@@ -1,33 +1,45 @@
 import React from "react";
 import { useState } from "react";
 import ReactDOM from "react-dom";
+import { useDispatch } from "react-redux";
 import { usePage } from "../hooks/usePage";
 import authService from "../services/authService";
 import userService from "../services/userService";
+import { loginAction } from "../store/authReducer";
 
 export default function LoginModal() {
   const { isOpenLoginModal, setIsOpenLoginModal, setUser } = usePage();
   const [isFetching, setIsFetching] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [form, setForm] = useState({});
+
+  const dispatch = useDispatch();
   const onSubmit = async () => {
-    try {
-      setIsFetching(true);
-      const result = await authService.login(form);
-      if (result.data) {
-        localStorage.setItem("token", JSON.stringify(result.data));
-        const user = await userService.getInfo();
-        if (user.data) {
-          localStorage.setItem("user", JSON.stringify(user.data));
-          setUser(user.data);
+    dispatch(
+      loginAction({
+        form,
+        success: () => {
           setIsOpenLoginModal(false);
-        }
-      }
-    } catch (err) {
-      setErrorMessage(err.message);
-    } finally {
-      setIsFetching(false);
-    }
+        },
+        error: (err) => {
+          setErrorMessage(err.message);
+        },
+        finally: () => {
+          setIsFetching(false);
+        },
+      })
+    );
+    // const result = await authService.login(form);
+    // if (result.data) {
+    //   localStorage.setItem("token", JSON.stringify(result.data));
+    //   const user = await userService.getInfo();
+    //   if (user.data) {
+    //     localStorage.setItem("user", JSON.stringify(user.data));
+    //     // setUser(user.data);
+    //     dispatch({ type: "auth/login", payload: user.data });
+    //
+    //   }
+    // }
   };
   return ReactDOM.createPortal(
     <div
