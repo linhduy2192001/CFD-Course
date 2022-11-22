@@ -1,5 +1,11 @@
-import React from "react";
-import { Navigate, useLocation, useParams } from "react-router-dom";
+import React, { useMemo } from "react";
+import {
+  generatePath,
+  Link,
+  Navigate,
+  useLocation,
+  useParams,
+} from "react-router-dom";
 import Course from "../components/Course";
 import PageNotFound from "../components/PageNotFound";
 import useQuery from "../hooks/useQuery";
@@ -11,6 +17,8 @@ import Required from "../components/Required";
 import PageLoading from "../components/PageLoading";
 import { useState } from "react";
 import Mentor from "../components/Mentor";
+import Page404 from "./not-found";
+import { REGISTER_PATH } from "../config/path";
 
 export default function CourseDetail() {
   const [activeContent, setActiveContent] = useState();
@@ -21,7 +29,6 @@ export default function CourseDetail() {
     [id]
   );
   const { data: courses } = useQuery(() => courseService.getList(), []);
-  // usePageChangeOnTop([]);
 
   if (loading)
     return (
@@ -31,11 +38,19 @@ export default function CourseDetail() {
       </p>
     );
 
-  if (!course) return <PageLoading />;
+  if (!course) return <Page404 />;
+
+  const registerPath = generatePath(REGISTER_PATH, {
+    id: course.id,
+    slug: course.slug,
+  });
 
   return (
     <main className="course-detail" id="main">
-      <section className="banner style2">
+      <section
+        className="banner style2"
+        style={{ "--background": course.template_color_banner }}
+      >
         <div className="container">
           <div className="info">
             <h1>{course.title}</h1>
@@ -47,7 +62,13 @@ export default function CourseDetail() {
                 <strong>Thời lượng:</strong> 18 buổi
               </div>
             </div>
-            <div className="btn white round">đăng ký</div>
+            <Link
+              to={registerPath}
+              className="btn white round"
+              style={{ "--color-btn": course.template_color_btn }}
+            >
+              đăng ký
+            </Link>
           </div>
         </div>
         <div className="bottom">

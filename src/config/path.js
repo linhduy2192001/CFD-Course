@@ -6,4 +6,6 @@ export const PROFILE_PAYMENT_PATH = "/ca-nhan/lich-su-thanh-toan";
 export const HOME_PATH = "";
 export const TEAM_PATH = "/than-vien";
 
+export const REGISTER_PATH = "/dang-ky/:slug-p:id";
+
 export const COURSE_DETAIL = "/khoa-hoc/:slug-p:id";

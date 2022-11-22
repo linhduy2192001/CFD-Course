@@ -4,6 +4,7 @@ import useQuery from "../hooks/useQuery";
 import courseService from "../services/courseService";
 import { LoadingOutlined } from "@ant-design/icons";
 
+console.log("Home ");
 export default function Home() {
   //   useEffect(() => {
   //     fetch(`http://cfd-reactjs.herokuapp.com/elearning/v4/courses

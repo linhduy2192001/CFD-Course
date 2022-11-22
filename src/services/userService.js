@@ -5,15 +5,7 @@ const userService = {
     return api.post("/user/update", { data });
   },
   getInfo() {
-    let token = localStorage.getItem("token");
-    if (token) {
-      token = JSON.parse(token);
-      return api.get("/user/get-info", {
-        headers: {
-          Authorization: `Bearer ${token.accessToken}`,
-        },
-      });
-    }
+    return api.get("/user/get-info");
   },
 };
 export default userService;

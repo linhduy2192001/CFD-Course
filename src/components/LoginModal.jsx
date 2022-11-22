@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useReducer } from "react";
 import { useState } from "react";
 import ReactDOM from "react-dom";
 import { useDispatch } from "react-redux";
@@ -7,14 +7,40 @@ import authService from "../services/authService";
 import userService from "../services/userService";
 import { loginAction } from "../store/authReducer";
 
+function loginReducer(state, action) {
+  switch (action.type) {
+    case "loading":
+      return {
+        ...state,
+        isFetching: action.payload,
+      };
+    case "errorMessage":
+      return {
+        ...state,
+        errorMessage: action.payload,
+      };
+
+    default:
+      return state;
+  }
+}
+
 export default function LoginModal() {
   const { isOpenLoginModal, setIsOpenLoginModal, setUser } = usePage();
-  const [isFetching, setIsFetching] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  // const [isFetching, setIsFetching] = useState(false);
+  // const [errorMessage, setErrorMessage] = useState("");
   const [form, setForm] = useState({});
 
-  const dispatch = useDispatch();
+  const [state, dispatchFun] = useReducer(loginReducer, {
+    isFetching: false,
+    errorMessage: "",
+  });
+
+  console.log("state :>> ", state);
+
+  const dispatch = useDispatch(loginReducer);
   const onSubmit = async () => {
+    dispatchFun({ type: "loading", payload: true });
     dispatch(
       loginAction({
         form,
@@ -22,10 +48,13 @@ export default function LoginModal() {
           setIsOpenLoginModal(false);
         },
         error: (err) => {
-          setErrorMessage(err.message);
+          dispatchFun({ type: "errorMessage", payload: err.message });
+
+          // setErrorMessage(err.message);
         },
         finally: () => {
-          setIsFetching(false);
+          dispatchFun({ type: "errorMessage", payload: false });
+          // setIsFetching(false);
         },
       })
     );
@@ -50,7 +79,9 @@ export default function LoginModal() {
         {/* login-form */}
         <div className="ct_login" style={{ display: "block" }}>
           <h2 className="title">Đăng nhập</h2>
-          {errorMessage && <p className="error-message">{errorMessage}</p>}
+          {state.errorMessage && (
+            <p className="error-message">{state.errorMessage}</p>
+          )}
           <input
             type="text"
             onChange={(ev) => (form.username = ev.currentTarget.value)}

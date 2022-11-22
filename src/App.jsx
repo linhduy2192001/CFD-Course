@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { createContext } from "react";
 import { Route, Router, Routes, useRoutes } from "react-router-dom";
 import { AuthProvider } from "./hooks/useAuth";
@@ -8,7 +8,12 @@ import router from "./router";
 
 function App() {
   const element = useRoutes(router);
-  return <AuthProvider>{element} </AuthProvider>;
+  return (
+    <Suspense fallback={<div>Loading ...</div>}>
+      {" "}
+      <AuthProvider>{element} </AuthProvider>;
+    </Suspense>
+  );
 }
 
 export default App;
