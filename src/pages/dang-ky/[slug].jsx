@@ -6,13 +6,33 @@ import { LoadingOutlined } from "@ant-design/icons";
 import Page404 from "../not-found";
 import { REGISTER_PATH } from "../../config/path";
 import { currency } from "../../utils";
-
+import moment from "moment";
+import { useForm } from "../../hooks/useForm";
+import Input from "../../components/Input";
 export default function Register() {
   const { id } = useParams();
   const { data: course, loading } = useQuery(
     () => courseService.getDetail(id),
     [id]
   );
+
+  const { form, setForm, error, validate } = useForm({
+    name: [{ required: true }],
+    email: [
+      { required: true, message: "Email là trường bắt buộc" },
+      { regexp: "email", message: "Bắt buộc đúng định dạng Email" },
+    ],
+    phone: [{ required: true }, { regexp: "phone" }],
+    website: [
+      { required: true },
+      { regexp: /https:\/\/(www\.)facebook.com\/[-a-zA-Z0-9]+/ },
+    ],
+  });
+
+  const onSubmit = () => {
+    if (validate()) {
+    }
+  };
   if (loading)
     return (
       <p>
@@ -23,8 +43,7 @@ export default function Register() {
   if (!course) {
     return <Page404 />;
   }
-
-  console.log("course :>> ", course);
+  const date = moment(course.opening_time);
   return (
     <main className="register-course" id="main">
       <section>
@@ -35,7 +54,7 @@ export default function Register() {
             <div className="main-info">
               <div className="date">
                 <strong>Khai giảng: </strong>
-                {course.close_time}
+                {date.format("DD/MM/YYYY")}
               </div>
               <div className="time">
                 <strong>Thời lượng:</strong> {course.count_video} buổi
@@ -45,30 +64,45 @@ export default function Register() {
               </div>
             </div>
             <div className="form">
-              <label>
-                <p>
-                  Họ và tên<span>*</span>
-                </p>
-                <input type="text" placeholder="Họ và tên bạn" />
-              </label>
-              <label>
-                <p>
-                  Số điện thoại<span>*</span>
-                </p>
-                <input type="text" placeholder="Số điện thoại" />
-              </label>
-              <label>
-                <p>
-                  Email<span>*</span>
-                </p>
-                <input type="text" placeholder="Email của bạn" />
-              </label>
-              <label>
-                <p>
-                  URL Facebook<span>*</span>
-                </p>
-                <input type="text" placeholder="https://facebook.com" />
-              </label>
+              <Input
+                error={error.name}
+                value={form.name}
+                onChange={(ev) =>
+                  setForm({ ...form, name: ev.currentTarget.value })
+                }
+                label="Họ và tên"
+                required
+                placeholder="Họ và tên"
+              />
+              <Input
+                error={error.phone}
+                value={form.phone}
+                onChange={(ev) =>
+                  setForm({ ...form, phone: ev.currentTarget.value })
+                }
+                label="Số điện thoại"
+                required
+                placeholder="Số điện thoại"
+              />
+              <Input
+                error={error.email}
+                value={form.email}
+                onChange={(ev) =>
+                  setForm({ ...form, email: ev.currentTarget.value })
+                }
+                label="Email"
+                required
+                placeholder="Email"
+              />
+              <Input
+                error={error.website}
+                value={form.website}
+                onChange={(ev) =>
+                  setForm({ ...form, website: ev.currentTarget.value })
+                }
+                label="Link FB"
+                placeholder="Link FB"
+              />
               <label className="disable">
                 <p>Sử dụng COIN</p>
                 <div className="checkcontainer">
@@ -96,7 +130,9 @@ export default function Register() {
                   placeholder="Mong muốn cá nhân và lịch bạn có thể học."
                 />
               </label>
-              <div className="btn main rect">đăng ký</div>
+              <div className="btn main rect" onClick={onSubmit}>
+                đăng ký
+              </div>
             </div>
           </div>
         </div>

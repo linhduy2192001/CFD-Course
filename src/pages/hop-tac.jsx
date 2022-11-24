@@ -2,21 +2,35 @@ import React, { useRef, useState } from "react";
 import { useEffect } from "react";
 import Count from "../components/Count";
 import Input from "../components/Input";
+import { useForm } from "../hooks/useForm";
+import { validate } from "../utils/validate";
 
 export default function Contact() {
-  const [isRunning, setIsRunning] = useState(true);
-  const countRef = useRef();
-  const inputRef = useRef();
+  const { form, setForm, error, validate } = useForm({
+    name: [{ required: true }],
+    email: [
+      { required: true, message: "Email là trường bắt buộc" },
+      { regexp: "email", message: "Bắt buộc đúng định dạng Email" },
+    ],
+    phone: [{ required: true }, { regexp: "phone" }],
+    website: [
+      { required: true },
+      { regexp: /https:\/\/(www\.)facebook.com\/[-a-zA-Z0-9]+/ },
+    ],
+  });
 
-  useEffect(() => {
-    console.log("ref :>> ", inputRef);
-  }, []);
+  const onSubmit = () => {
+    if (validate()) {
+      console.log("thanh cong");
+    }
+  };
   /**
    * Ref 1: Thao tac voi DOM element
    * Ref 2: forwardRef
    * Ref 3: vừa forwardRef -> trả ra 1 thể hiện khác của ref, sử dụng useImperativeHandle
    */
-
+  // const [form, setForm] = useState({});
+  // const [error, setError] = useState({});
   return (
     <main className="register-course" id="main">
       <section className="section-1 wrap container">
@@ -29,14 +43,44 @@ export default function Contact() {
         </p>
         <div className="form">
           <Input
-            ref={inputRef}
+            error={error.name}
+            value={form.name}
+            onChange={(ev) =>
+              setForm({ ...form, name: ev.currentTarget.value })
+            }
             label="Họ và tên"
             required
             placeholder="Họ và tên"
           />
-          <Input label="Số điện thoại" required placeholder="Số điện thoại" />
-          <Input label="Email" required placeholder="Email" />
-          <Input label="Website" placeholder="Đường dẫn website http://" />
+          <Input
+            error={error.phone}
+            value={form.phone}
+            onChange={(ev) =>
+              setForm({ ...form, phone: ev.currentTarget.value })
+            }
+            label="Số điện thoại"
+            required
+            placeholder="Số điện thoại"
+          />
+          <Input
+            error={error.email}
+            value={form.email}
+            onChange={(ev) =>
+              setForm({ ...form, email: ev.currentTarget.value })
+            }
+            label="Email"
+            required
+            placeholder="Email"
+          />
+          <Input
+            error={error.website}
+            value={form.website}
+            onChange={(ev) =>
+              setForm({ ...form, website: ev.currentTarget.value })
+            }
+            label="Link FB"
+            placeholder="Link FB"
+          />
           <Input label="Tiêu đề" required placeholder="Tiêu đề liên hệ/" />
           <Input label=" Nội dung" required placeholder="Tiêu đề liên hệ/" />
           <label>
@@ -45,23 +89,10 @@ export default function Contact() {
             </p>
             <textarea name id cols={30} rows={10} defaultValue={""} />
           </label>
-          <div className="btn main rect">đăng ký</div>
+          <div className="btn main rect" onClick={onSubmit}>
+            đăng ký
+          </div>
         </div>
-        <button
-          onClick={() => {
-            countRef.current.stop();
-          }}
-        >
-          Stop
-        </button>
-        <button
-          onClick={() => {
-            countRef.current.resume();
-          }}
-        >
-          Resume
-        </button>
-        <Count ref={countRef} />
       </section>
       {/* <div class="register-success">
             <div class="contain">

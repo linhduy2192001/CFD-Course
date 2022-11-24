@@ -1,7 +1,9 @@
+import { useForm } from "../hooks/useForm";
 import React, { useReducer } from "react";
 import { useState } from "react";
 import ReactDOM from "react-dom";
 import { useDispatch } from "react-redux";
+import styled from "styled-components";
 import { usePage } from "../hooks/usePage";
 import authService from "../services/authService";
 import userService from "../services/userService";
@@ -25,39 +27,57 @@ function loginReducer(state, action) {
   }
 }
 
+const ErrorText = styled.p`
+  color: red;
+`;
+
 export default function LoginModal() {
   const { isOpenLoginModal, setIsOpenLoginModal, setUser } = usePage();
   // const [isFetching, setIsFetching] = useState(false);
   // const [errorMessage, setErrorMessage] = useState("");
-  const [form, setForm] = useState({});
+  const { form, validate, error } = useForm({
+    username: [{ required: true }, { regexp: "email" }],
+    password: [
+      { required: true },
+      {
+        min: 6,
+        max: 32,
+      },
+      {
+        regexp: "password",
+        message: "Password phải chứa kí tự thường, hoa, số và kí tự đặc biệt ",
+      },
+    ],
+  });
 
   const [state, dispatchFun] = useReducer(loginReducer, {
     isFetching: false,
     errorMessage: "",
   });
-
-  console.log("state :>> ", state);
-
   const dispatch = useDispatch(loginReducer);
-  const onSubmit = async () => {
+  const onSubmit = () => {
     dispatchFun({ type: "loading", payload: true });
-    dispatch(
-      loginAction({
-        form,
-        success: () => {
-          setIsOpenLoginModal(false);
-        },
-        error: (err) => {
-          dispatchFun({ type: "errorMessage", payload: err.message });
 
-          // setErrorMessage(err.message);
-        },
-        finally: () => {
-          dispatchFun({ type: "errorMessage", payload: false });
-          // setIsFetching(false);
-        },
-      })
-    );
+    if (validate()) {
+      dispatch(
+        loginAction({
+          form,
+          success: () => {
+            setIsOpenLoginModal(false);
+          },
+          error: (err) => {
+            dispatchFun({ type: "errorMessage", payload: err.message });
+
+            // setErrorMessage(err.message);
+          },
+          finally: () => {
+            dispatchFun({ type: "errorMessage", payload: false });
+            // setIsFetching(false);
+          },
+        })
+      );
+    }
+
     // const result = await authService.login(form);
     // if (result.data) {
     //   localStorage.setItem("token", JSON.stringify(result.data));
@@ -87,11 +107,14 @@ export default function LoginModal() {
             onChange={(ev) => (form.username = ev.currentTarget.value)}
             placeholder="Email / Số điện thoại"
           />
+          {error.username && <ErrorText>{error.username}</ErrorText>}
           <input
             type="password"
             onChange={(ev) => (form.password = ev.currentTarget.value)}
             placeholder="Mật khẩu"
           />
+          {error.password && <ErrorText>{error.password}</ErrorText>}
+
           <div className="remember">
             <label className="btn-remember">
               <div>
@@ -106,7 +129,6 @@ export default function LoginModal() {
           <div className="btn rect main btn-login" onClick={onSubmit}>
             đăng nhập
           </div>
-
           <div className="close" onClick={() => setIsOpenLoginModal(false)}>
             <img src="img/close-icon.png" alt="" />
           </div>
