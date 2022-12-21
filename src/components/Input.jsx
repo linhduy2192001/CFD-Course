@@ -15,14 +15,10 @@ const Label = styled.label`
   }
 `;
 
-export default function Input({
-  error,
-  label,
-  required,
-  placeholder,
-  type = "text",
-  ...props
-}) {
+function Input(
+  { error, label, required, placeholder, type = "text", ...props },
+  ref
+) {
   return (
     <>
       <Label>
@@ -30,9 +26,10 @@ export default function Input({
           {label}
           {required}
         </p>
-        <input type={type} placeholder={placeholder} {...props} />
+        <input ref={ref} type={type} placeholder={placeholder} {...props} />
         {error && <ErrorText className="error-text">{error}</ErrorText>}
       </Label>
     </>
   );
 }
+export default forwardRef(Input);
