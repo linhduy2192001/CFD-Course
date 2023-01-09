@@ -5,7 +5,7 @@ const userService = {
     return api.post("/user/update", { data });
   },
   getInfo() {
-    return api.get("/user/get-info");
+    return api.get("/users");
   },
 };
 export default userService;

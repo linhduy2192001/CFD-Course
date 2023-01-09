@@ -5,7 +5,7 @@ const authService = {
     return api.post("/authentication/v2/login", data);
   },
   register(data) {
-    return api.post("/register", data);
+    return api.post("/users/register", data);
   },
   refreshToken(data) {
     return api.post("/authentication/v2/refresh-token", data);
